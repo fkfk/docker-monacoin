@@ -36,9 +36,9 @@ RUN set -x\
 RUN set -x\
  && mkdir -p /tmp/build \
  && cd /tmp/build \
- && wget https://github.com/monacoinproject/monacoin/archive/monacoin-0.16.2.tar.gz \
- && tar xf monacoin-0.16.2.tar.gz \
- && cd monacoin-monacoin-0.16.2 \
+ && wget https://github.com/monacoinproject/monacoin/archive/monacoin-0.16.3.tar.gz \
+ && tar xf monacoin-0.16.3.tar.gz \
+ && cd monacoin-monacoin-0.16.3 \
  && ./autogen.sh \
  && ./configure --prefix=/usr --enable-hardening --enable-wallet --without-gui \
  && make install \
