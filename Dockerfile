@@ -36,15 +36,17 @@ RUN set -x\
 RUN set -x\
  && mkdir -p /tmp/build \
  && cd /tmp/build \
- && wget https://github.com/monacoinproject/monacoin/archive/monacoin-0.16.3.tar.gz \
- && tar xf monacoin-0.16.3.tar.gz \
- && cd monacoin-monacoin-0.16.3 \
+ && wget https://github.com/monacoinproject/monacoin/archive/26eae562176a58564f275816612e63f23b825368.tar.gz \
+ && tar xf 26eae562176a58564f275816612e63f23b825368.tar.gz \
+ && cd monacoin-26eae562176a58564f275816612e63f23b825368 \
  && ./autogen.sh \
  && ./configure --prefix=/usr --enable-hardening --enable-wallet --without-gui \
  && make install \
  && cd / \
  && rm -rf /tmp/build
-RUN apt-get remove -y wget
+RUN apt-get remove -y wget \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
 USER mona
 RUN mkdir /home/mona/.monacoin
@@ -55,8 +57,11 @@ VOLUME /data
 ENV RPCUSER mona
 ENV RPCPASSWORD mona
 ENV RPCALLOWIP "172.0.0.0/8"
+ENV TESTNET 0
+ENV REGTEST 0
+ENV DISABLEWALLET=0
 
 EXPOSE 9401 9402 29000
 
 WORKDIR /mona
-CMD /usr/bin/monacoind --rpcuser=$RPCUSER --rpcpassword=$RPCPASSWORD --rpcallowip=$RPCALLOWIP
+CMD /usr/bin/monacoind --rpcuser=$RPCUSER --rpcpassword=$RPCPASSWORD --rpcallowip=$RPCALLOWIP --testnet=$TESNET --regtest=$REGTEST --disablewallet=$DISABLEWALLET
